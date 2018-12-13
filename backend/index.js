@@ -104,6 +104,11 @@ unityWebSocketServer.on('request', function(request) {
         connectionToUI.sendUTF(JSON.stringify(stringMessageData));
       }
     }
+
+    if (message === "debug"){
+      connectionToUI.sendUTF(JSON.stringify(message));
+    }
+
   });
 
   // user disconnected

@@ -3,8 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "d3": "^3.5.17",
+    "rd3": "^0.8.1",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
+    "react-faux-dom": "^4.2.0",
     "react-scripts": "2.1.1",
     "react-websocket": "^2.0.0"
   },
