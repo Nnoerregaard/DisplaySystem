@@ -105,8 +105,8 @@ unityWebSocketServer.on('request', function(request) {
       }
     }
 
-    if (message === "debug"){
-      connectionToUI.sendUTF(JSON.stringify(message));
+    if (message.type == "utf8" && message.utf8Data === "debug"){
+      connectionToUI.sendUTF(JSON.stringify({message: message.utf8Data}));
     }
 
   });
