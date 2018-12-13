@@ -1,8 +1,18 @@
 import React, { Component } from 'react';
+import Websocket from 'react-websocket';
 import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
+  constructor(props){
+    super(props);
+  }
+
+  handleData(data){
+    debugger;
+  }
+
+  // TODO: Avoid binding this!
   render() {
     return (
       <div className="App">
@@ -17,8 +27,9 @@ class App extends Component {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Learn React
+            Learn React Motherfuck!
           </a>
+        <Websocket url="ws://localhost:1337" onMessage={this.handleData.bind(this)} />    
         </header>
       </div>
     );
