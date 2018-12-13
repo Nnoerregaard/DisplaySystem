@@ -1,0 +1,29 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"><head></head><body style="background-color: red;">﻿
+
+
+
+    <meta charset="utf-8">
+    <title></title>
+	<script src="https://d3js.org/d3.v5.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous">
+	</script>
+	<style>
+	</style>
+
+
+    <div id="viz"></div>
+	<script>
+	    var sampleSVG = d3.select("#viz")
+        .append("svg")
+        .attr("width", 100)
+        .attr("height", 100);    
+
+		sampleSVG.append("circle")
+        .style("stroke", "gray")
+        .style("fill", "white")
+        .attr("r", 40)
+        .attr("cx", 50)
+        .attr("cy", 50)
+	</script>
+
+</body></html>
