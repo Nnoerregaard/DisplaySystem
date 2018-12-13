@@ -9,8 +9,10 @@ class App extends Component {
     super(props);
     this.state = {
       tokenValue: 5,
-      width: 960,
-      height: 600,
+      width: 150,
+      height: 300,
+      xPosition: 10,
+      yPosition: 25,
       // First one is x value, the next is y value in the arrays within the array
       data: [
         {
@@ -28,24 +30,41 @@ class App extends Component {
 
   handleData(data){
     debugger;
-    this.increaseValue();
+    var jsonData = JSON.parse(data);
+    //jsonData.numberOfTokens
+    this.setValueForAddTokens(2);
+    //this.setPosition(jsonData.position);
   }
 
   // TODO: This can be done way more elegant!
-  increaseValue(){
+  setValueForAddTokens(numberOfAddTokens){
     this.setState((state, props) => {
       var newData = state.data;
-      var newFirstValue = state.data[1]["values"][0][1] + state.tokenValue;
-      var newSecondValue = state.data[1]["values"][1][1] + state.tokenValue;
-
-      newData[1]["values"][0][1] = newFirstValue;
-      newData[1]["values"][1][1] = newSecondValue;
+      newData[1]["values"][0][1] = state.tokenValue * numberOfAddTokens;
+      newData[1]["values"][1][1] = state.tokenValue * numberOfAddTokens;
 
       return {data: newData}
     });
   }
 
-  // TODO: Avoid binding this!
+  setPosition(position){
+    var positionInLocalCoordinates = this.convertToLocalCoordinateSystem(position);
+    this.setState({xPosition: positionInLocalCoordinates.x, 
+                   yPosition: positionInLocalCoordinates.y})
+
+  }
+
+  convertToLocalCoordinateSystem(position){
+    /* NB! Be aware that these change if you change 
+    * the size of the visualization or want to change
+    * where it appears relative to the referent */
+    var xWorldToLocalConversionFactor = 0.065;
+    var yWorldToLocalConversionFactor = 0.014;
+    
+    return {x : position.x * xWorldToLocalConversionFactor,
+            y : position.y * yWorldToLocalConversionFactor};
+  }
+
   render() {
   var AreaChart = rd3.AreaChart;
     return (
@@ -54,16 +73,14 @@ class App extends Component {
           data={this.state.data}
           width="100%"
           viewBoxObject={{
-            x: 0,
-            y: 0,
-            height: 400,
-            width: 500
+            x: this.state.xPosition,
+            y: this.state.yPosition,
+            height: this.state.height,
+            width: this.state.width
           }}
           height={400}
-          title="Area Chart"
           xAxisTickInterval={{ unit: 'year', interval: 1 }}
-          xAxisLabel="Year"
-          yAxisLabel="Share Price"
+          yAxisLabel="Time in minutes"
           xAccessor={(d) => {
             return new Date(d[0]);
           }
@@ -71,6 +88,7 @@ class App extends Component {
           yAccessor={(d) => d[1]}
           domain={{ y: [, 60] }}
         />
+        {/* TODO: Avoid binding this! */}
         <Websocket url="ws://localhost:1336" onMessage={this.handleData.bind(this)} />
       </div>
     );
