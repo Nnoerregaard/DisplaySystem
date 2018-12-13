@@ -6,10 +6,12 @@ import './App.css';
 class App extends Component {
   constructor(props){
     super(props);
+    this.state = { dataFromWs: ""};
   }
 
   handleData(data){
     debugger;
+    this.setState({"dataFromWs": data});
   }
 
   // TODO: Avoid binding this!
@@ -19,7 +21,7 @@ class App extends Component {
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <p>
-            Edit <code>src/App.js</code> and save to reload.
+            Edit <code>src/App.js</code> and save to reload. {this.state.dataFromWs}
           </p>
           <a
             className="App-link"
@@ -29,7 +31,7 @@ class App extends Component {
           >
             Learn React Motherfuck!
           </a>
-        <Websocket url="ws://localhost:1337" onMessage={this.handleData.bind(this)} />    
+        <Websocket url="ws://localhost:1336" onMessage={this.handleData.bind(this)} />    
         </header>
       </div>
     );
