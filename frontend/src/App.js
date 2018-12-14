@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Websocket from 'react-websocket';
 import './App.css';
 import rd3 from 'rd3';
+import _ from 'underscore';
 
 
 class App extends Component {
@@ -24,20 +25,26 @@ class App extends Component {
           "name": "Africa",
           "values": [[1, 0], [2, 0]]
         }
-      ]
+      ],
+      networkData: {}
     };
   }
 
   handleData(data){
-    debugger;
     var jsonData = JSON.parse(data);
+    if (!_.isEqual(this.state.networkData, jsonData)){
+      debugger;
+      this.setValueForAddTokens(jsonData.numberOfAddTokens);
+
+      this.setState({networkData: jsonData});
+    }
     //jsonData.numberOfTokens
-    this.setValueForAddTokens(2);
     //this.setPosition(jsonData.position);
   }
 
   // TODO: This can be done way more elegant!
   setValueForAddTokens(numberOfAddTokens){
+    debugger;
     this.setState((state, props) => {
       var newData = state.data;
       newData[1]["values"][0][1] = state.tokenValue * numberOfAddTokens;
@@ -60,7 +67,7 @@ class App extends Component {
     * where it appears relative to the referent */
     var xWorldToLocalConversionFactor = 0.065;
     var yWorldToLocalConversionFactor = 0.014;
-    
+
     return {x : position.x * xWorldToLocalConversionFactor,
             y : position.y * yWorldToLocalConversionFactor};
   }
@@ -90,6 +97,7 @@ class App extends Component {
         />
         {/* TODO: Avoid binding this! */}
         <Websocket url="ws://localhost:1336" onMessage={this.handleData.bind(this)} />
+        <button onClick={() => this.setValueForAddTokens(1)}>Debug</button>
       </div>
     );
   }
