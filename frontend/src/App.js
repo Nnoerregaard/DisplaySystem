@@ -12,8 +12,8 @@ class App extends Component {
       tokenValue: 5,
       width: 150,
       height: 300,
-      xPosition: 10,
-      yPosition: 25,
+      xPosition: 0,
+      yPosition: 87,
       // First one is x value, the next is y value in the arrays within the array
       data: [
         {
@@ -45,7 +45,6 @@ class App extends Component {
 
   // TODO: This can be done way more elegant!
   setValueForAddTokens(numberOfAddTokens){
-    debugger;
     this.setState((state, props) => {
       var newData = state.data;
       newData[1]["values"][0][1] = state.tokenValue * numberOfAddTokens;
@@ -66,11 +65,11 @@ class App extends Component {
     /* NB! Be aware that these change if you change 
     * the size of the visualization or want to change
     * where it appears relative to the referent */
-    var xWorldToLocalConversionFactor = 15.38;
-    var yWorldToLocalConversionFactor = 71.43;
+    var xWorldToLocalConversionFactor = 230;
+    var yWorldToLocalConversionFactor = 286;
 
-    return {x : position.x * xWorldToLocalConversionFactor,
-            y : position.y * yWorldToLocalConversionFactor};
+    return {x : (position.x * xWorldToLocalConversionFactor) - 161,
+            y : (position.y * yWorldToLocalConversionFactor) - 28 };
   }
 
   render() {
@@ -86,7 +85,7 @@ class App extends Component {
             height: this.state.height,
             width: this.state.width
           }}
-          height={400}
+          height={450}
           xAxisTickInterval={{ unit: 'year', interval: 1 }}
           yAxisLabel="Time in minutes"
           xAccessor={(d) => {
