@@ -29,10 +29,23 @@ class WhatIf extends Component {
     };
   }
 
-  handleData(data){
-    // TODO: Switch on message type here!
-    var jsonData = JSON.parse(data);
+  handleMessages(message){
+    var jsonData = JSON.parse(message);
+    switch(jsonData.type){
+      case "IdentityUpdate":
+        this.updateIdentity(jsonData);
+        break;
+      case "Data":
+        this.handleData(jsonData);
+        break;
+      default:
+        console.log("Unknown message type received!");
+        break;
+    }
 
+  }
+
+  handleData(jsonData){
     //Only update if there is something new
     if (!_.isEqual(this.state.networkData, jsonData)){
 
@@ -43,7 +56,6 @@ class WhatIf extends Component {
 
       //If this is the target cluster, update the values
       if (_.isEqual(jsonData.targetCluster, this.state.identity)) {
-        debugger;
         this.setValueForAddTokens(jsonData.numberOfAddTokens);
         this.setPosition(jsonData.position)
 
@@ -52,9 +64,8 @@ class WhatIf extends Component {
     }
   }
 
-  //TODO: This is a special call
-  updateIdentity(data){
-
+  updateIdentity(jsonIdentityUpdate){
+    this.setState({identity: jsonIdentityUpdate.identity});
   }
 
   // TODO: This can be done way more elegant!
@@ -110,7 +121,7 @@ class WhatIf extends Component {
           domain={{ y: [, 60] }}
         />
         {/* TODO: Avoid binding this! */}
-        <Websocket url="ws://localhost:1336" onMessage={this.handleData.bind(this)} />
+        <Websocket url="ws://localhost:1336" onMessage={this.handleMessages.bind(this)} />
         {/*<button onClick={() => this.setValueForAddTokens(1)}>Debug</button>*/}
       </div>
     );
