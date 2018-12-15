@@ -46,6 +46,8 @@ class WhatIf extends Component {
   }
 
   handleData(jsonData){
+    var identity = this.state.identity;
+    console.log("The identity state is set to x: " + identity.x + ", y: " + identity.y + ", z: " + identity.z);
     //Only update if there is something new
     if (!_.isEqual(this.state.networkData, jsonData)){
 

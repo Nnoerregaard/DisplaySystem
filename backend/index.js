@@ -93,12 +93,11 @@ unityWebSocketServer.on('request', function(request) {
 
   // user sent some message
   connectionToUnity.on('message', function (message) {
-    //connectionToUnity.sendUTF("Heej fra server!");
     if (message.type === 'binary') {
       var messageData = message.binaryData;
       var stringMessageData = JSON.parse(messageData.toString());
-
       console.log(stringMessageData);
+      
       connectionToUnity.sendUTF("Your message type was: " + message.type);
       if (connectionToUI != undefined){
         connectionToUI.sendUTF(JSON.stringify(stringMessageData));
@@ -109,7 +108,6 @@ unityWebSocketServer.on('request', function(request) {
     if (message.type == "utf8"){
       connectionToUI.sendUTF(message.utf8Data);
     }
-
   });
 
   // user disconnected
