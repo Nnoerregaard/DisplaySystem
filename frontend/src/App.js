@@ -35,6 +35,7 @@ class App extends Component {
     if (!_.isEqual(this.state.networkData, jsonData)){
       debugger;
       this.setValueForAddTokens(jsonData.numberOfAddTokens);
+      this.setPosition(jsonData.position)
 
       this.setState({networkData: jsonData});
     }
@@ -65,8 +66,8 @@ class App extends Component {
     /* NB! Be aware that these change if you change 
     * the size of the visualization or want to change
     * where it appears relative to the referent */
-    var xWorldToLocalConversionFactor = 0.065;
-    var yWorldToLocalConversionFactor = 0.014;
+    var xWorldToLocalConversionFactor = 15.38;
+    var yWorldToLocalConversionFactor = 71.43;
 
     return {x : position.x * xWorldToLocalConversionFactor,
             y : position.y * yWorldToLocalConversionFactor};
@@ -97,7 +98,7 @@ class App extends Component {
         />
         {/* TODO: Avoid binding this! */}
         <Websocket url="ws://localhost:1336" onMessage={this.handleData.bind(this)} />
-        <button onClick={() => this.setValueForAddTokens(1)}>Debug</button>
+        {/*<button onClick={() => this.setValueForAddTokens(1)}>Debug</button>*/}
       </div>
     );
   }
