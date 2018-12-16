@@ -6,7 +6,7 @@ class WhatIf extends Component {
   constructor(props){
     super(props);
     this.state = {
-      tokenValue: 5,
+      tokenValue: this.props.tokenValue,
       width: 150,
       height: 300,
       xPosition: 0,
@@ -15,7 +15,7 @@ class WhatIf extends Component {
       data: [
         {
           "name": "North America",
-          "values": [[1, 10], [2, 10]]
+          "values": this.props.initialValues
         },
 
         {
@@ -49,7 +49,11 @@ class WhatIf extends Component {
       //If this is the target cluster, update the values
       if (this.props.identity === jsonData.targetCluster) {
         this.setValueForAddTokens(jsonData.numberOfAddTokens);
-        this.setPosition(jsonData.position)
+
+        // Hack to make the static visualization stay put
+        if (this.state.identity !== 2){
+          this.setPosition(jsonData.position);
+        }
 
         this.setState({ networkData: jsonData });
       }
@@ -107,13 +111,13 @@ class WhatIf extends Component {
           }}
           height={450}
           xAxisTickInterval={{ unit: 'year', interval: 1 }}
-          yAxisLabel="Time in minutes"
+          yAxisLabel={this.props.yLabel}
           xAccessor={(d) => {
             return new Date(d[0]);
           }
           }
           yAccessor={(d) => d[1]}
-          domain={{ y: [, 60] }}
+          domain={{ y: this.props.domain }}
         />
       </div>
     );
