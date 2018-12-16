@@ -96,8 +96,11 @@ unityWebSocketServer.on('request', function(request) {
     if (message.type === 'binary') {
       var messageData = message.binaryData;
       var stringMessageData = JSON.parse(messageData.toString());
-      console.log(stringMessageData);
-      
+
+      if (stringMessageData.type == "IdentityUpdate"){
+        console.log("Received the following identity update: " + stringMessageData.identity);
+      }
+
       connectionToUnity.sendUTF("Your message type was: " + message.type);
       if (connectionToUI != undefined){
         connectionToUI.sendUTF(JSON.stringify(stringMessageData));

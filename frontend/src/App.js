@@ -7,7 +7,9 @@ class App extends Component {
   render() {
     return (
       <div>
-          <WhatIf></WhatIf>
+          {/* NB! These props create an implicit dependency between the view and the interaction tracker and should
+              therefore be abolished as quickly as possible! */}
+          <WhatIf identity={2}></WhatIf>
       </div>
     );
   }

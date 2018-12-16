@@ -24,8 +24,7 @@ class WhatIf extends Component {
           "values": [[1, 0], [2, 0]]
         }
       ],
-      networkData: {},
-      identity: {}
+      networkData: {}
     };
   }
 
@@ -46,18 +45,10 @@ class WhatIf extends Component {
   }
 
   handleData(jsonData){
-    var identity = this.state.identity;
-    console.log("The identity state is set to x: " + identity.x + ", y: " + identity.y + ", z: " + identity.z);
     //Only update if there is something new
     if (!_.isEqual(this.state.networkData, jsonData)){
-
-      //Initially just set identity to the first one you encounter. This should change in the future!
-      if (_.isEqual(this.state.identity, {})){
-        this.setState({identity: jsonData.targetCluster});
-      }
-
       //If this is the target cluster, update the values
-      if (_.isEqual(jsonData.targetCluster, this.state.identity)) {
+      if (this.props.identity === jsonData.targetCluster) {
         this.setValueForAddTokens(jsonData.numberOfAddTokens);
         this.setPosition(jsonData.position)
 
@@ -70,7 +61,7 @@ class WhatIf extends Component {
     this.setState({identity: jsonIdentityUpdate.identity});
   }
 
-  // TODO: This can be done way more elegant!
+  // TODO: This can be done way more elegantly!
   setValueForAddTokens(numberOfAddTokens){
     this.setState((state, props) => {
       var newData = state.data;
