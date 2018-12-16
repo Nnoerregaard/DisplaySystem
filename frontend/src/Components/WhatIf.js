@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Websocket from 'react-websocket';
 import rd3 from 'rd3';
 import _ from 'underscore';
 
@@ -116,9 +115,6 @@ class WhatIf extends Component {
           yAccessor={(d) => d[1]}
           domain={{ y: [, 60] }}
         />
-        {/* TODO: Avoid binding this! */}
-        <Websocket url="ws://localhost:1336" onMessage={this.handleMessages.bind(this)} />
-        {/*<button onClick={() => this.setValueForAddTokens(1)}>Debug</button>*/}
       </div>
     );
   }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+import Websocket from 'react-websocket';
 import WhatIf from './Components/WhatIf';
 import './App.css';
 
@@ -9,6 +9,14 @@ class App extends Component {
 
         this.nodeOne = React.createRef();
         this.nodeTwo = React.createRef();
+
+        this.dynamicWhatIfNode = React.createRef();
+        this.staticWhatIfNode = React.createRef();
+    }
+
+    handleMessages(message){
+        this.dynamicWhatIfNode.current.handleMessages(message);
+        this.staticWhatIfNode.current.handleMessages(message);
     }
 
     render() {
@@ -17,11 +25,12 @@ class App extends Component {
                 {/* NB! These props create an implicit dependency between the view and the interaction tracker and should
               therefore be abolished as quickly as possible! */}
                 <div style={{position:"absolute", width:"150px", height:"300px", top:170, left:350 }} ref={this.nodeOne}>
-                    <WhatIf identity={1} parentRef={this.nodeOne}></WhatIf>
+                    <WhatIf identity={1} parentRef={this.nodeOne} ref={this.dynamicWhatIfNode}></WhatIf>
                 </div>
                 <div style={{position:"absolute", width:"150px", height:"300px", top:70, left:250 }} ref={this.nodeTwo}>
-                    <WhatIf identity={2} parentRef={this.nodeTwo}></WhatIf>
+                    <WhatIf identity={2} parentRef={this.nodeTwo} ref={this.staticWhatIfNode}></WhatIf>
                 </div>
+                <Websocket url="ws://localhost:1336" onMessage={this.handleMessages.bind(this)} />
             </div>
         );
     }
