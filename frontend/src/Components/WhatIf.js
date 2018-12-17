@@ -51,7 +51,7 @@ class WhatIf extends Component {
         this.setValueForAddTokens(jsonData.numberOfAddTokens);
 
         // Hack to make the static visualization stay put
-        if (this.state.identity !== 2){
+        if (this.props.identity !== 2){
           this.setPosition(jsonData.position);
         }
 
@@ -94,6 +94,10 @@ class WhatIf extends Component {
 
     return {x : (position.x * xWorldToLocalConversionFactor) + 420,
             y : (position.y * yWorldToLocalConversionFactor) + 219 };
+  }
+
+  colorFunction(input){
+    return "#FF0000";
   }
 
   render() {
