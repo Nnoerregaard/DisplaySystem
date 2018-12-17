@@ -25,11 +25,11 @@ class App extends Component {
                 {/* NB! These props create an implicit dependency between the view and the interaction tracker and should
               therefore be abolished as quickly as possible! */}
                 <div style={{position:"absolute", width:"150px", height:"300px", top:170, left:350 }} ref={this.nodeOne}>
-                    <WhatIf identity={1} yLabel="Number of TODOs" domain={[1, 2, 3, 4, 5]} initialValues={[[1, 1], [2, 1]]} tokenValue={1}
+                    <WhatIf identity={1} yLabel="Number of TODOs" domain={[0, 5]} initialValues={[[1, 1], [2, 1]]} yAxisTickCount={5}
                         parentRef={this.nodeOne} ref={this.dynamicWhatIfNode}></WhatIf>
                 </div>
                 <div style={{position:"absolute", width:"150px", height:"300px", top:70, left:250 }} ref={this.nodeTwo}>
-                    <WhatIf identity={2} yLabel="Time in minutes" domain={[20, 40, 60, 80, 100]} initialValues={[[1, 10], [2, 10]]} tokenValue={5}
+                    <WhatIf identity={2} yLabel="Time in minutes" domain={[0, 120]} initialValues={[[1, 20], [2, 20]]} yAxisTickCount={6}
                         parentRef={this.nodeTwo} ref={this.staticWhatIfNode}></WhatIf>
                 </div>
                 <Websocket url="ws://localhost:1336" onMessage={this.handleMessages.bind(this)} />

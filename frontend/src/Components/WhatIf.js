@@ -6,7 +6,7 @@ class WhatIf extends Component {
   constructor(props){
     super(props);
     this.state = {
-      tokenValue: this.props.tokenValue,
+      tokenValue: 1,
       width: 150,
       height: 300,
       xPosition: 0,
@@ -109,9 +109,11 @@ class WhatIf extends Component {
             height: this.state.height,
             width: this.state.width
           }}
-          height={450}
+          height={470}
           xAxisTickInterval={{ unit: 'year', interval: 1 }}
           yAxisLabel={this.props.yLabel}
+          yAxisTickCount={this.props.yAxisTickCount}
+          yAxisLabelOffset={30}
           xAccessor={(d) => {
             return new Date(d[0]);
           }
