@@ -9,6 +9,7 @@ class App extends Component {
     constructor(props){
         super(props);
 
+        // TODO: Consider whether all of this actually belong in state!
         this.container = React.createRef();
 
         this.nodeOne = React.createRef();
@@ -17,7 +18,10 @@ class App extends Component {
 
         this.dynamicWhatIfNode = React.createRef();
         this.staticWhatIfNode = React.createRef();
-        this.progressBar = React.createRef();
+
+        this.state = {
+            progressBars: []
+        };
     }
 
     /*handleMessages(message){
@@ -28,9 +32,23 @@ class App extends Component {
     handleMessages(message){
         var jsonData = JSON.parse(message);
         if (jsonData.type == "Creation") {
-            //TODO: Make it so that new TodoProgress elements are created in here
+            var parentRef = React.createRef();
+            var progressBar = React.createRef();
+
+            var newProgressBar =
+                (<div style={{ position: "absolute", width: "50px", height: "17px", top: 25, left: 10 }} ref={parentRef}>
+                    <TodoProgress identity={3} parentRef={parentRef} ref={progressBar}></TodoProgress>
+                </div>)
+
+            this.setState((state, props) => {
+                var progressBars = state.progressBars;
+                progressBars.push(newProgressBar);
+
+                return {progressBars};
+            });
+
             var transformedWidth = this.container.current.offsetWidth * jsonData.width;
-            this.progressBar.current.initialize(transformedWidth, jsonData.position);
+            progressBar.current.initialize(transformedWidth, jsonData.position);
         }
     }
 
@@ -48,9 +66,8 @@ class App extends Component {
                         parentRef={this.nodeTwo} ref={this.staticWhatIfNode}></WhatIf>
                 </div> */}
 
-                <div style={{position:"absolute", width:"50px", height:"17px", top:25, left:10 }} ref={this.nodeThree}>
-                    <TodoProgress identity={3} parentRef={this.nodeThree} ref={this.progressBar}></TodoProgress>
-                </div>
+                {this.state.progressBars.map((component) => component)}
+
                 <Websocket url="ws://localhost:1336" onMessage={this.handleMessages.bind(this)} />
             </div>
         );
