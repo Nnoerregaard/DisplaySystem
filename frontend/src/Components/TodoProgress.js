@@ -1,7 +1,6 @@
 
 import React, { Component } from 'react';
-import Websocket from 'react-websocket';
-import rd3 from 'rd3';
+import { Progress } from 'reactstrap';
 import _ from 'underscore';
 
 class TodoProgress extends Component {
@@ -26,21 +25,26 @@ class TodoProgress extends Component {
 
   }
 
+  initialize(transformedWidth, position){
+    this.setPosition(position);
+    this.props.parentRef.current.style.width = transformedWidth + "px";
+  }
+
   handleData(jsonData){
     //Only update if there is something new
     if (!_.isEqual(this.state.networkData, jsonData)){
-      //If this is the target cluster, update the values
-      if (this.props.identity === jsonData.targetCluster) {
-        this.setValueForAddTokens(jsonData.numberOfAddTokens);
-        this.setPosition(jsonData.position)
-
-        this.setState({ networkData: jsonData });
-      }
     }
   }
 
   updateIdentity(jsonIdentityUpdate){
     this.setState({identity: jsonIdentityUpdate.identity});
+  }
+
+  setPosition(position){
+    var positionInLocalCoordinates = this.convertToLocalCoordinateSystem(position);
+
+    this.props.parentRef.current.style.top = positionInLocalCoordinates.y + "px";
+    this.props.parentRef.current.style.left = positionInLocalCoordinates.x + "px";
   }
 
   convertToLocalCoordinateSystem(position){
@@ -56,9 +60,11 @@ class TodoProgress extends Component {
 
   render() {
     return (
-      <div></div>
+      <div>
+        <Progress value={1} color="warning" />
+      </div>
     );
   }
 }
 
-export default WhatIf;
+export default TodoProgress;
