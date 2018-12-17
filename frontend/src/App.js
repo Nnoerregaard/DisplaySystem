@@ -48,7 +48,7 @@ class App extends Component {
                         parentRef={this.nodeTwo} ref={this.staticWhatIfNode}></WhatIf>
                 </div> */}
 
-                <div style={{position:"absolute", width:"150px", height:"300px", top:70, left:250 }} ref={this.nodeThree}>
+                <div style={{position:"absolute", width:"50px", height:"17px", top:25, left:10 }} ref={this.nodeThree}>
                     <TodoProgress identity={3} parentRef={this.nodeThree} ref={this.progressBar}></TodoProgress>
                 </div>
                 <Websocket url="ws://localhost:1336" onMessage={this.handleMessages.bind(this)} />

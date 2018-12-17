@@ -28,6 +28,7 @@ class TodoProgress extends Component {
   initialize(transformedWidth, position){
     this.setPosition(position);
     this.props.parentRef.current.style.width = transformedWidth + "px";
+    this.props.parentRef.current.style.display = "block";
   }
 
   handleData(jsonData){
@@ -51,11 +52,11 @@ class TodoProgress extends Component {
     /* NB! Be aware that these change if you change 
     * the size of the visualization or want to change
     * where it appears relative to the referent */
-    var xWorldToLocalConversionFactor = 230;
-    var yWorldToLocalConversionFactor = 286;
+    var xWorldToLocalConversionFactor = 8.3;
+    var yWorldToLocalConversionFactor = -544.2857;
 
-    return {x : (position.x * xWorldToLocalConversionFactor) - 161,
-            y : (position.y * yWorldToLocalConversionFactor) - 28 };
+    return {x : (position.x * xWorldToLocalConversionFactor),
+            y : (position.y * yWorldToLocalConversionFactor) + 460.4286 };
   }
 
   render() {
