@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import rd3 from 'rd3';
+import d3 from 'd3';
 import _ from 'underscore';
 
 class WhatIf extends Component {
@@ -14,14 +15,16 @@ class WhatIf extends Component {
       // First one is x value, the next is y value in the arrays within the array
       data: [
         {
-          "name": "North America",
           "values": this.props.initialValues
-        },
-
+        }/*,
         {
-          "name": "Africa",
-          "values": [[1, 0], [2, 0]]
-        }
+          "name": "",
+          "values": [[1, 1], [2, 1]]
+        },
+        {
+          "name": "",
+          "values": [[1, 1], [2, 1]]
+        }*/
       ],
       networkData: {}
     };
@@ -68,8 +71,10 @@ class WhatIf extends Component {
   setValueForAddTokens(numberOfAddTokens){
     this.setState((state, props) => {
       var newData = state.data;
-      newData[1]["values"][0][1] = state.tokenValue * numberOfAddTokens;
-      newData[1]["values"][1][1] = state.tokenValue * numberOfAddTokens;
+      var value = state.tokenValue * numberOfAddTokens;
+
+      var newEntry = {"values": [[1, value], [2, value]]}
+      newData.push(newEntry);
 
       return {data: newData}
     });
@@ -80,9 +85,6 @@ class WhatIf extends Component {
 
     this.props.parentRef.current.style.top = positionInLocalCoordinates.y + "px";
     this.props.parentRef.current.style.left = positionInLocalCoordinates.x + "px";
-    /*this.setState({xPosition: positionInLocalCoordinates.x, 
-                   yPosition: positionInLocalCoordinates.y})*/
-
   }
 
   convertToLocalCoordinateSystem(position){
@@ -96,12 +98,12 @@ class WhatIf extends Component {
             y : (position.y * yWorldToLocalConversionFactor) + 219 };
   }
 
-  colorFunction(input){
-    return "#FF0000";
-  }
-
   render() {
   var AreaChart = rd3.AreaChart;
+  //033D17 = green, #920903 = red, #DB9700 = yellow, #0000FF = blue
+  var colors = ["#033D17", "#920903"]
+  {/*colors={d3.scale.ordinal().range(colors)}*/ }
+  //, "#DB9700", "#0000FF"]
     return (
       <div>
         <AreaChart
