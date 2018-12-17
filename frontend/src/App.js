@@ -3,6 +3,7 @@ import Websocket from 'react-websocket';
 import WhatIf from './Components/WhatIf';
 import TodoProgress from './Components/TodoProgress';
 import { Progress, Button } from 'reactstrap';
+import _ from 'underscore';
 import './App.css';
 
 class App extends Component {
@@ -20,7 +21,8 @@ class App extends Component {
         this.staticWhatIfNode = React.createRef();
 
         this.state = {
-            progressBars: []
+            progressBars: [],
+            progressBarPositions: []
         };
     }
 
@@ -31,7 +33,7 @@ class App extends Component {
 
     handleMessages(message){
         var jsonData = JSON.parse(message);
-        if (jsonData.type == "Creation") {
+        if (jsonData.type == "Creation" && !this.containsPosition(jsonData.position)) {
             var parentRef = React.createRef();
             var progressBar = React.createRef();
 
@@ -42,14 +44,21 @@ class App extends Component {
 
             this.setState((state, props) => {
                 var progressBars = state.progressBars;
-                progressBars.push(newProgressBar);
+                var progressBarPositions = state.progressBarPositions;
 
-                return {progressBars};
+                progressBars.push(newProgressBar);
+                progressBarPositions.push(jsonData.position);
+
+                return {progressBars, progressBarPositions};
             });
 
             var transformedWidth = this.container.current.offsetWidth * jsonData.width;
             progressBar.current.initialize(transformedWidth, jsonData.position);
         }
+    }
+
+    containsPosition(position){
+        return this.state.progressBarPositions.some(value => _.isEqual(value, position));
     }
 
     render() {
