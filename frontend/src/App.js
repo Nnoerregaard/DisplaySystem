@@ -74,6 +74,7 @@ class App extends Component {
                     <WhatIf identity={2} yLabel="Time in minutes" domain={[0, 120]} initialValues={[[1, 20], [2, 20]]} yAxisTickCount={6}
                         parentRef={this.nodeTwo} ref={this.staticWhatIfNode}></WhatIf>
                 </div> */}
+                I am alive!
 
                 {this.state.progressBars.map((component) => component)}
 

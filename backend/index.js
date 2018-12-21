@@ -11,6 +11,20 @@ app.listen(8080);*/
 // Optional. You will see this name in eg. 'ps' or 'top' command
 process.title = 'UI';
 
+const express = require('express')
+const app = express();
+app.use(express.json());
+const port = 3000
+
+app.get('/', (req, res) => res.send('Hello World!'))
+
+app.post('/progressBarProgress', (req, res) => {
+  debugger;
+  res.sendStatus(200);
+});
+
+app.listen(port, () => console.log(`REST server listening on port ${port}!`))
+
 // Port where we'll run the websocket server
 var unityWebSocketServerPort = 1337;
 var uiWebSocketServerPort = 1336;
