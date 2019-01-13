@@ -13,7 +13,7 @@ process.title = 'UI';
 
 const express = require('express')
 const app = express();
-app.use(express.json());
+app.use(express.urlencoded());
 const port = 3000
 
 app.get('/', (req, res) => res.send('Hello World!'))
@@ -21,6 +21,26 @@ app.get('/', (req, res) => res.send('Hello World!'))
 app.post('/progressBarProgress', (req, res) => {
   debugger;
   res.sendStatus(200);
+});
+
+var atomicTokenAddtions = {};
+app.post('/addAtomicToken', (req, res) => {
+  var identity = req.body.identity;
+  atomicTokenAddtions[identity] = "0.1"; // TODO: Change with some real value at some point!
+
+  res.send(200);
+});
+
+app.get("/atomicTokenAddition", (req, res) => {
+  var identity = req.body.identity;
+  var valueToReturn = atomicTokenAddtions[identity];
+  delete atomicTokenAddtions[identity]; // To avoid resending it!
+
+  if (valueToReturn != undefined){
+    res.send(valueToReturn);
+  } else {
+    res.send(0);
+  }
 });
 
 app.listen(port, () => console.log(`REST server listening on port ${port}!`))

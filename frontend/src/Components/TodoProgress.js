@@ -1,12 +1,13 @@
 
 import React, { Component } from 'react';
 import { Progress } from 'reactstrap';
+import Get from 'restful-react';
 import _ from 'underscore';
 
 class TodoProgress extends Component {
   constructor(props){
     super(props);
-    this.state = {};
+    this.state = { value: 0};
   }
 
   handleMessages(message){
@@ -62,7 +63,11 @@ class TodoProgress extends Component {
   render() {
     return (
       <div>
-        <Progress value={1} color="warning" />
+        <Get path="http://localhost:3000/atomicTokenAddition" lazy>
+        {(data, states, { get }) => (
+            <Progress value={this.state.value} />
+        )}
+        </Get>
       </div>
     );
   }

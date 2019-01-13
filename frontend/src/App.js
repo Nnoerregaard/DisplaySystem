@@ -55,6 +55,10 @@ class App extends Component {
             var transformedWidth = this.container.current.offsetWidth * jsonData.width;
             progressBar.current.initialize(transformedWidth, jsonData.position);
         }
+
+        if (jsonData.type == "Addition"){
+
+        }
     }
 
     containsPosition(position){

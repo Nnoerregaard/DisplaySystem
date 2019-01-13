@@ -12,6 +12,7 @@
     "react-scripts": "2.1.1",
     "react-websocket": "^2.0.0",
     "reactstrap": "^6.5.0",
+    "restful-react": "^7.1.0",
     "underscore": "^1.9.1"
   },
   "scripts": {
